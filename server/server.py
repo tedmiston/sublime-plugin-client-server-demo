@@ -1,9 +1,12 @@
 import subprocess
 import sys
 
-from flask import Flask, jsonify, request
+from flask import Flask, request
+
+from utils import JsonResponse
 
 app = Flask(__name__)
+app.response_class = JsonResponse
 
 
 @app.route('/bash', methods=['POST'])
@@ -14,10 +17,10 @@ def bash():
                           universal_newlines=True)
     output = proc.stdout
 
-    return jsonify({
+    return {
         'command': command,
         'output': output,
-    })
+    }
 
 
 @app.route('/upper', methods=['GET'])
@@ -25,14 +28,14 @@ def upper():
     text = request.args['text']
     output = text.upper()
 
-    return jsonify({
+    return {
         'input': text,
         'output': output,
-    })
+    }
 
 
 @app.route('/version', methods=['GET'])
 def version():
-    return jsonify({
+    return {
         'version': sys.version,
-    })
+    }
