@@ -15,6 +15,12 @@ import requests  # noqa
 SERVER_BASE_URL = None
 
 
+def show_error_server_not_running():
+    sublime.error_message((
+        'Could not connect to server. Is it running at {server_url}?'
+    ).format(server_url=SERVER_BASE_URL))
+
+
 def _url(endpoint):
     return '{}{}'.format(SERVER_BASE_URL, endpoint)
 
@@ -30,9 +36,7 @@ def get_server_python_version():
     try:
         resp = requests.get(_url('/version'))
     except requests.exceptions.ConnectionError:
-        sublime.error_message((
-            'Could not connect to server. Is it running at {server_url}?'
-        ).format(server_url=SERVER_BASE_URL))
+        show_error_server_not_running()
         raise
 
     contents = resp.json()
@@ -66,9 +70,7 @@ class BashCommand(BaseCommand):
         try:
             resp = requests.post(_url('/bash'), json={'command': text})
         except requests.exceptions.ConnectionError:
-            sublime.error_message((
-                'Could not connect to server. Is it running at {server_url}?'
-            ).format(server_url=SERVER_BASE_URL))
+            show_error_server_not_running()
             raise
 
         command = resp.json()['command']
@@ -92,9 +94,7 @@ class UppercaseCommand(BaseCommand):
         try:
             resp = requests.get(_url('/upper'), params={'text': text})
         except requests.exceptions.ConnectionError:
-            sublime.error_message((
-                'Could not connect to server. Is it running at {server_url}?'
-            ).format(server_url=SERVER_BASE_URL))
+            show_error_server_not_running()
             raise
 
         input_text = resp.json()['input']
