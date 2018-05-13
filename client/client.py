@@ -40,13 +40,10 @@ def get_server_python_version():
     return version
 
 
-class VersionsCommand(sublime_plugin.TextCommand):
-    """
-    Show Python versions running in Sublime and on the local server.
-    """
+class BaseCommand(sublime_plugin.TextCommand):
+    """Perform setup common to all commands."""
 
     def run(self, edit):
-        """Sublime entrypoint."""
         global SERVER_BASE_URL
 
         self.settings = sublime.load_settings('Client Server Demo.sublime-settings')
@@ -54,6 +51,13 @@ class VersionsCommand(sublime_plugin.TextCommand):
             host=self.settings.get('server_host'),
             port=self.settings.get('server_port'),
         )
+
+
+class VersionsCommand(BaseCommand):
+    """Show Python versions running in Sublime and on the local server."""
+
+    def run(self, edit):
+        super().run(edit)
 
         local_version = get_client_python_version()
         server_version = get_server_python_version()
@@ -64,19 +68,10 @@ class VersionsCommand(sublime_plugin.TextCommand):
 
 
 class UppercaseCommand(sublime_plugin.TextCommand):
-    """
-    Convert text to uppercase via POST request.
-    """
+    """Convert text to uppercase via POST request."""
 
     def run(self, edit):
-        """Sublime entrypoint."""
-        global SERVER_BASE_URL
-
-        self.settings = sublime.load_settings('Client Server Demo.sublime-settings')
-        SERVER_BASE_URL = '{host}:{port}'.format(
-            host=self.settings.get('server_host'),
-            port=self.settings.get('server_port'),
-        )
+        super().run(edit)
 
         window = sublime.active_window()
         window.show_input_panel('Text', '', self._on_done, None, None)
