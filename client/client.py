@@ -20,25 +20,6 @@ def _url(endpoint):
     return '{}{}'.format(SERVER_BASE_URL, endpoint)
 
 
-def get_client_python_version():
-    """Get the Python version running inside Sublime."""
-    version = sys.version.split(' ')[0]
-    return version
-
-
-def get_server_python_version():
-    """Get the Python version running on the local server."""
-    try:
-        resp = requests.get(_url('/version'))
-    except requests.exceptions.ConnectionError:
-        show_error_server_not_running()
-        raise
-
-    contents = resp.json()
-    version = contents['version'].split(' ')[0]
-    return version
-
-
 class BaseCommand(sublime_plugin.TextCommand):
     """Perform setup common to all commands."""
 
@@ -106,9 +87,26 @@ class VersionsCommand(BaseCommand):
     def run(self, edit):
         super().run(edit)
 
-        local_version = get_client_python_version()
-        server_version = get_server_python_version()
+        local_version = self._get_client_python_version()
+        server_version = self._get_server_python_version()
 
         sublime.message_dialog((
             '- Client Python: {}\n- Server Python: {}'
         ).format(local_version, server_version))
+
+    def _get_client_python_version(self):
+        """Get the Python version running inside Sublime."""
+        version = sys.version.split(' ')[0]
+        return version
+
+    def _get_server_python_version(self):
+        """Get the Python version running on the local server."""
+        try:
+            resp = requests.get(_url('/version'))
+        except requests.exceptions.ConnectionError:
+            show_error_server_not_running()
+            raise
+
+        contents = resp.json()
+        version = contents['version'].split(' ')[0]
+        return version
