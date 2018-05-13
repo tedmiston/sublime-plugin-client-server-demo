@@ -53,6 +53,25 @@ class BaseCommand(sublime_plugin.TextCommand):
         )
 
 
+class BashCommand(BaseCommand):
+    """Run an arbitrary bash command via POST request."""
+
+    def run(self, edit):
+        super().run(edit)
+
+        window = sublime.active_window()
+        window.show_input_panel('Command', '', self._on_done, None, None)
+
+    def _on_done(self, text):
+        resp = requests.post(_url('/bash'), json={'command': text})
+        command = resp.json()['command']
+        output_text = resp.json()['output']
+
+        sublime.message_dialog((
+            '- Command: {}\n- Output:\n{}'
+        ).format(command, output_text))
+
+
 class UppercaseCommand(BaseCommand):
     """Convert text to uppercase via POST request."""
 

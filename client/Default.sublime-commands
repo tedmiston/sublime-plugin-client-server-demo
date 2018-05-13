@@ -1,5 +1,9 @@
 [
 	{
+		"caption": "Client Server Demo: Bash",
+		"command": "bash"
+	},
+	{
 		"caption": "Client Server Demo: Uppercase",
 		"command": "uppercase"
 	},
