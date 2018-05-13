@@ -53,7 +53,7 @@ class BaseCommand(sublime_plugin.TextCommand):
         )
 
 
-class UppercaseCommand(sublime_plugin.TextCommand):
+class UppercaseCommand(BaseCommand):
     """Convert text to uppercase via POST request."""
 
     def run(self, edit):
