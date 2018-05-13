@@ -20,9 +20,9 @@ def bash():
     })
 
 
-@app.route('/upper', methods=['POST'])
+@app.route('/upper', methods=['GET'])
 def upper():
-    text = request.json['text']
+    text = request.args['text']
     output = text.upper()
 
     return jsonify({

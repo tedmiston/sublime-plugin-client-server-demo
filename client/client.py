@@ -73,7 +73,7 @@ class BashCommand(BaseCommand):
 
 
 class UppercaseCommand(BaseCommand):
-    """Convert text to uppercase via POST request."""
+    """Convert text to uppercase via GET request."""
 
     def run(self, edit):
         super().run(edit)
@@ -82,7 +82,7 @@ class UppercaseCommand(BaseCommand):
         window.show_input_panel('Text', '', self._on_done, None, None)
 
     def _on_done(self, text):
-        resp = requests.post(_url('/upper'), json={'text': text})
+        resp = requests.get(_url('/upper'), params={'text': text})
         input_text = resp.json()['input']
         output_text = resp.json()['output']
 
