@@ -1,16 +1,11 @@
-import os
+from . import load_vendorized  # noqa
+
 import sys
 
 import sublime
 import sublime_plugin
 
-# add vendorized dependencies to module search path
-parent_dir = os.path.abspath(os.path.dirname(__file__))
-vendor_dir = os.path.join(parent_dir, 'vendor')
-if vendor_dir not in sys.path:
-    sys.path.append(vendor_dir)
-
-import requests  # noqa
+import requests
 
 SERVER_BASE_URL = None
 
