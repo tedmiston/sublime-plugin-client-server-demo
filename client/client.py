@@ -63,7 +63,14 @@ class BashCommand(BaseCommand):
         window.show_input_panel('Command', '', self._on_done, None, None)
 
     def _on_done(self, text):
-        resp = requests.post(_url('/bash'), json={'command': text})
+        try:
+            resp = requests.post(_url('/bash'), json={'command': text})
+        except requests.exceptions.ConnectionError:
+            sublime.error_message((
+                'Could not connect to server. Is it running at {server_url}?'
+            ).format(server_url=SERVER_BASE_URL))
+            raise
+
         command = resp.json()['command']
         output_text = resp.json()['output']
 
@@ -82,7 +89,14 @@ class UppercaseCommand(BaseCommand):
         window.show_input_panel('Text', '', self._on_done, None, None)
 
     def _on_done(self, text):
-        resp = requests.get(_url('/upper'), params={'text': text})
+        try:
+            resp = requests.get(_url('/upper'), params={'text': text})
+        except requests.exceptions.ConnectionError:
+            sublime.error_message((
+                'Could not connect to server. Is it running at {server_url}?'
+            ).format(server_url=SERVER_BASE_URL))
+            raise
+
         input_text = resp.json()['input']
         output_text = resp.json()['output']
 
