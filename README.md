@@ -26,7 +26,14 @@ ln -s ~/sublime-plugin-client-server-demo/client/ sublime-plugin-client-server-d
 
 ## Quickstart
 
-1. Start the server: `cd server && ./run.sh`
+1. Start the server:
+
+	```
+	cd server
+	pipenv shell
+	./run.sh
+	```
+
 1. In Sublime, run `Client Server Demo: Versions` in the command palette.
 
 ## Development
