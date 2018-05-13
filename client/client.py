@@ -12,11 +12,7 @@ if vendor_dir not in sys.path:
 
 import requests  # noqa
 
-settings = sublime.load_settings('Client Server Demo.sublime-settings')
-server_host = settings.get('server_host')
-server_port = settings.get('server_port')
-
-SERVER_BASE_URL = '{}:{}'.format(server_host, server_port)
+SERVER_BASE_URL = None
 
 
 def _url(endpoint):
@@ -44,6 +40,14 @@ class VersionsCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
         """Sublime entrypoint."""
+        global SERVER_BASE_URL
+
+        self.settings = sublime.load_settings('Client Server Demo.sublime-settings')
+        SERVER_BASE_URL = '{host}:{port}'.format(
+            host=self.settings.get('server_host'),
+            port=self.settings.get('server_port'),
+        )
+
         local_version = get_client_python_version()
         server_version = get_server_python_version()
 
