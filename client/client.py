@@ -51,6 +51,6 @@ class VersionsCommand(sublime_plugin.TextCommand):
         local_version = get_client_python_version()
         server_version = get_server_python_version()
 
-        sublime.message_dialog(
-            '- Client Python: {}\n- Server Python: {}'.format(
-                local_version, server_version))
+        sublime.message_dialog((
+            '- Client Python: {}\n- Server Python: {}'
+        ).format(local_version, server_version))
