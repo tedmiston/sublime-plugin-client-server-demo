@@ -12,7 +12,11 @@ if vendor_dir not in sys.path:
 
 import requests  # noqa
 
-SERVER_BASE_URL = 'http://127.0.0.1:5000'
+settings = sublime.load_settings('Client Server Demo.sublime-settings')
+server_host = settings.get('server_host')
+server_port = settings.get('server_port')
+
+SERVER_BASE_URL = '{}:{}'.format(server_host, server_port)
 
 
 def _url(endpoint):

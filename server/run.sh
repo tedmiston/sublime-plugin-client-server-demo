@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-flask run
+flask run --port=$FLASK_PORT

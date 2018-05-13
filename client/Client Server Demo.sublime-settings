@@ -1,0 +1,7 @@
+{
+	// The host where the server is running
+	"server_host": "http://127.0.0.1",
+
+	// The port where the server component is running
+	"server_port": "5000",
+}
