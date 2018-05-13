@@ -61,3 +61,31 @@ class VersionsCommand(sublime_plugin.TextCommand):
         sublime.message_dialog((
             '- Client Python: {}\n- Server Python: {}'
         ).format(local_version, server_version))
+
+
+class UppercaseCommand(sublime_plugin.TextCommand):
+    """
+    Convert text to uppercase via POST request.
+    """
+
+    def run(self, edit):
+        """Sublime entrypoint."""
+        global SERVER_BASE_URL
+
+        self.settings = sublime.load_settings('Client Server Demo.sublime-settings')
+        SERVER_BASE_URL = '{host}:{port}'.format(
+            host=self.settings.get('server_host'),
+            port=self.settings.get('server_port'),
+        )
+
+        window = sublime.active_window()
+        window.show_input_panel('Text', '', self._on_done, None, None)
+
+    def _on_done(self, text):
+        resp = requests.post(_url('/upper'), json={'text': text})
+        input_text = resp.json()['input']
+        output_text = resp.json()['output']
+
+        sublime.message_dialog((
+            '- Input: {}\n- Output: {}'
+        ).format(input_text, output_text))
