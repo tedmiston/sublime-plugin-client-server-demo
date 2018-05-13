@@ -23,10 +23,11 @@ def bash():
 @app.route('/upper', methods=['POST'])
 def upper():
     text = request.json['text']
+    output = text.upper()
 
     return jsonify({
         'input': text,
-        'output': text.upper(),
+        'output': output,
     })
 
 
