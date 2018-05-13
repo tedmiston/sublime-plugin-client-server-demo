@@ -27,7 +27,14 @@ def get_client_python_version():
 
 def get_server_python_version():
     """Get the Python version running on the local server."""
-    resp = requests.get(_url('/version'))
+    try:
+        resp = requests.get(_url('/version'))
+    except requests.exceptions.ConnectionError:
+        sublime.error_message((
+            'Could not connect to server. Is it running at {server_url}?'
+        ).format(server_url=SERVER_BASE_URL))
+        raise
+
     contents = resp.json()
     version = contents['version'].split(' ')[0]
     return version
