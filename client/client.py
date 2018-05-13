@@ -53,20 +53,6 @@ class BaseCommand(sublime_plugin.TextCommand):
         )
 
 
-class VersionsCommand(BaseCommand):
-    """Show Python versions running in Sublime and on the local server."""
-
-    def run(self, edit):
-        super().run(edit)
-
-        local_version = get_client_python_version()
-        server_version = get_server_python_version()
-
-        sublime.message_dialog((
-            '- Client Python: {}\n- Server Python: {}'
-        ).format(local_version, server_version))
-
-
 class UppercaseCommand(sublime_plugin.TextCommand):
     """Convert text to uppercase via POST request."""
 
@@ -84,3 +70,17 @@ class UppercaseCommand(sublime_plugin.TextCommand):
         sublime.message_dialog((
             '- Input: {}\n- Output: {}'
         ).format(input_text, output_text))
+
+
+class VersionsCommand(BaseCommand):
+    """Show Python versions running in Sublime and on the local server."""
+
+    def run(self, edit):
+        super().run(edit)
+
+        local_version = get_client_python_version()
+        server_version = get_server_python_version()
+
+        sublime.message_dialog((
+            '- Client Python: {}\n- Server Python: {}'
+        ).format(local_version, server_version))

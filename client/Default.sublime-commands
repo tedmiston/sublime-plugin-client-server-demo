@@ -1,10 +1,10 @@
 [
 	{
-		"caption": "Client Server Demo: Versions",
-		"command": "versions"
-	},
-	{
 		"caption": "Client Server Demo: Uppercase",
 		"command": "uppercase"
+	},
+	{
+		"caption": "Client Server Demo: Versions",
+		"command": "versions"
 	},
 ]
