@@ -13,6 +13,22 @@ The client and server communicate via an HTTP API using Flask.
 
 The demo client includes a vendorized dependency for `requests`.
 
+## Setup
+
+```
+git clone https://github.com/tedmiston/sublime-plugin-client-server-demo.git
+cd sublime-plugin-client-server-demo
+cd server
+pipenv install
+cd ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
+ln -s ~/sublime-plugin-client-server-demo/client/ sublime-plugin-client-server-demo-client
+```
+
+## Quickstart
+
+1. Start the server: `cd server && ./run.sh`
+1. In Sublime, run `Client Server Demo: Versions` in the command palette.
+
 ## Development
 
 To add/install vendorized dependencies:
